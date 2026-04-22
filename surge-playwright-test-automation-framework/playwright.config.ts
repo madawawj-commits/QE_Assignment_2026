@@ -23,7 +23,10 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['html'],
+    ['allure-playwright']
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -31,6 +34,18 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    
+    /* Take screenshot on test failure */
+    screenshot: 'only-on-failure',
+    
+    /* Capture video on failure */
+    video: 'retain-on-failure',
+    
+    /* Run tests in headless mode */
+    headless: true,
+    
+    /* Slow down test execution for local visibility */
+    launchOptions: process.env.CI ? {} : { slowMo: 1000 }
   },
 
   /* Configure projects for major browsers */
