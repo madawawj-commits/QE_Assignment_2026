@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "This README would normally document whatever steps are necessary to get your application up and running.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "allure:report": "allure generate allure-results --clean --name \"SwagLabsAutomation\" && allure open",
+    "test:allure": "npx playwright test && allure generate allure-results --clean --name \"SwagLabsAutomation\" && allure open"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
