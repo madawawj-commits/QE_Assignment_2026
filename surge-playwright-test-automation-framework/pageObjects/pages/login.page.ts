@@ -19,6 +19,7 @@ export default class LoginPage {
     txtUsername = () => this.page.locator('[data-test="username"]'); // username field
     pwdPassword = () => this.page.locator('[data-test="password"]'); //password field
     btnSignIn = () => this.page.getByRole('button', { name: 'LOGIN' }); //sign in button
+    errorMessage = () => this.page.locator('[data-test="error"]'); // error message container
 
     /*
     ACTIONS
@@ -31,5 +32,17 @@ export default class LoginPage {
         await this.pwdPassword().fill(password);
         await this.btnSignIn().click();
         console.log("Login using: " + username + " username");
+    }
+
+    //get error message text
+    public async getErrorMessage(): Promise<string> {
+        const errorElement = this.errorMessage();
+        await errorElement.waitFor({ state: 'visible', timeout: 5000 });
+        return await errorElement.textContent() || '';
+    }
+
+    //check if error message is displayed
+    public async isErrorMessageDisplayed(): Promise<boolean> {
+        return await this.errorMessage().isVisible();
     }
 }
