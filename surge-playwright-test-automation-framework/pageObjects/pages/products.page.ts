@@ -103,4 +103,40 @@ export default class ProductsPage {
                await this.productPrices().first().isVisible() &&
                await this.productDescriptions().first().isVisible();
     }
+
+    //add product to cart by name
+    public async addProductToCartByName(productName: string) {
+        const productNames = await this.productNames().all();
+        for (let i = 0; i < productNames.length; i++) {
+            const name = await productNames[i].textContent();
+            if (name && name.includes(productName)) {
+                const addToCartButton = this.addToCartButtons().nth(i);
+                await addToCartButton.click();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //click cart icon
+    public async clickCartIcon() {
+        const cartIcon = this.page.locator('.shopping_cart_link');
+        await cartIcon.click();
+    }
+
+    //click continue shopping button
+    public async clickContinueShopping() {
+        const continueButton = this.page.locator('#continue-shopping');
+        await continueButton.click();
+    }
+
+    //get cart icon badge count
+    public async getCartIconCount(): Promise<number> {
+        const cartBadge = this.page.locator('.shopping_cart_badge');
+        if (await cartBadge.isVisible()) {
+            const countText = await cartBadge.textContent();
+            return countText ? parseInt(countText) : 0;
+        }
+        return 0;
+    }
 }
