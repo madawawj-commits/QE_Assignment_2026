@@ -27,3 +27,12 @@ This README would normally document whatever steps are necessary to get your app
 
 * Repo owner or admin
 * Other community or team contact
+
+## Branching Strategy ##
+- main: Production branch
+- develop: Development branch
+- feat/*: Feature branches
+- fix/*: Fix branches
+- hotfix/*: Hotfix branches
+
+
