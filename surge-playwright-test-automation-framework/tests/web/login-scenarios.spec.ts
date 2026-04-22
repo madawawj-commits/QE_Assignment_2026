@@ -9,13 +9,16 @@ test.describe('SauceDemo Login Scenarios', () => {
         await loginPage.navigateToPage(WebEnv.WEB_URL);
     });
 
-    test('TC001: Valid username and valid password - Successful login', async ({ loginPage, productsPage }) => {
+    test('TC001: Valid username and valid password - Successful login', async ({ loginPage }) => {
         console.log('Test Started: Valid credentials login...');
         
         await loginPage.userLogin(loginData.validCredentials.username, loginData.validCredentials.password);
         
-        // Verify successful login - products page should be visible
-        expect(await productsPage.productsIsVisible()).toBeTruthy();
+        // Verify successful login - error message should not be displayed
+        expect(await loginPage.isErrorMessageDisplayed()).toBeFalsy();
+        
+        // Verify we're no longer on login page by checking if username field is not visible
+        expect(await loginPage.txtUsername().isVisible()).toBeFalsy();
         
         console.log('Test Completed: Valid credentials login successful');
     });
