@@ -91,4 +91,27 @@ export default class CartPage {
     public async clickCheckout() {
         await this.checkoutButton().click();
     }
+
+    //remove product from cart by name
+    public async removeProductFromCartByName(productName: string) {
+        const names = await this.cartItemNames().all();
+        for (let i = 0; i < names.length; i++) {
+            const name = await names[i].textContent();
+            if (name && name.includes(productName)) {
+                const removeButton = this.removeButtons().nth(i);
+                await removeButton.click();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //remove all products from cart
+    public async removeAllProductsFromCart() {
+        const items = await this.cartItems().all();
+        for (let i = 0; i < items.length; i++) {
+            await this.removeButtons().first().click();
+            await this.page.waitForTimeout(500);
+        }
+    }
 }
